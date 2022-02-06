@@ -11,7 +11,7 @@ namespace AtlasAddressBook.Data
         {
         }
 
-        public virtual DbSet<Contact> Conatcts { get; set; } = default!;
+        public virtual DbSet<Contact> Contacts { get; set; } = default!;
 
         public virtual DbSet<Category> Categories { get; set; } = default!;
 

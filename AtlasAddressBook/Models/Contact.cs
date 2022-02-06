@@ -10,6 +10,7 @@ namespace AtlasAddressBook.Models
 
         //Foreign Key
         public string? UserId { get; set; }
+
         [Required]
         [Display(Name = "First Name")]
         [StringLength(50, ErrorMessage = "The {0} must be atleast {2} and at max {1} characters long.", MinimumLength = 2)]
@@ -30,19 +31,19 @@ namespace AtlasAddressBook.Models
         public string? Address1 { get; set; }
 
         public string? Address2 { get; set; }
+        
         [Required]
-
         public string? City { get; set; }
 
         [Required]
         public string? State { get; set; }
 
         [Required]
+        [DataType(DataType.PostalCode)]
         public int ZipCode { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
-
 
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
