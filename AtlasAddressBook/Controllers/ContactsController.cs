@@ -30,16 +30,16 @@ namespace AtlasAddressBook.Controllers
         public ContactsController(ApplicationDbContext context, 
                                     UserManager<AppUser> userManager,
                                     ICategoryService categoryService,
-                                    IImageService imageService, 
-                                    DataService dataService, 
-                                    IContactService contaceService)
+                                    IImageService imageService,  
+                                    IContactService contactService,
+                                    DataService dataService)
         {
             _context = context;
             _userManager = userManager;
             _categoryService = categoryService;
             _imageService = imageService;
             _dataService = dataService;
-            _contactService = _contactService;
+            _contactService = contactService;
 
         }
 
@@ -47,13 +47,12 @@ namespace AtlasAddressBook.Controllers
         public async Task<IActionResult> Index()
         {
             string userId = _userManager.GetUserId(User);
-            var DBResults = _context.Contacts
-                                .Include(c => c.User)
-                                .Include(c => c.Categories)
-                                .Where(c => c.UserId == userId);
-           
-            List<Contact> contacts = await DBResults.ToListAsync();
-            return View(contacts);
+
+
+            IEnumerable<Contact> model = await _context.Contacts.Where(c => c.UserId == userId).ToListAsync();
+
+
+            return View(model);
         }
 
         // GET: Contacts/Details/5

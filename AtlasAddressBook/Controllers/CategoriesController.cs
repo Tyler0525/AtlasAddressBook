@@ -11,6 +11,7 @@ using AtlasAddressBook.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using AtlasAddressBook.Services.Interfaces;
+using AtlasAddressBook.Services;
 
 namespace AtlasAddressBook.Controllers
 {
@@ -19,11 +20,22 @@ namespace AtlasAddressBook.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<AppUser> _userManager;
-        private readonly ICategorySerivce _categoryService;
+        private readonly ICategoryService _categoryService;
+        private readonly IImageService _imageService;
+        private readonly IContactService _contactService;
 
-        public CategoriesController(ApplicationDbContext context, UserManager<AppUser> userManager)
+
+        public CategoriesController(ApplicationDbContext context,
+                                    UserManager<AppUser> userManager,
+                                    ICategoryService categoryService,
+                                    IImageService imageService, 
+                                    IContactService contactService)
         {
             _context = context;
+            _userManager = userManager;
+            _categoryService = categoryService;
+            _imageService = imageService;
+            _contactService = contactService;
         }
 
         // GET: Categories
@@ -31,7 +43,7 @@ namespace AtlasAddressBook.Controllers
         {
             string userId = _userManager.GetUserId(User);
 
-            Ienumberable<Category> model = await _categoryService.GetUserCategoriesAsync(userId);
+            IEnumerable<Category> model = await _categoryService.GetUserCategoriesAsync(userId);
 
             return View(model);
         }
@@ -44,7 +56,7 @@ namespace AtlasAddressBook.Controllers
                 return NotFound();
             }
 
-            Contact contact = await _contactService 
+            var category= await _context.Categories.FindAsync(id); 
 
 
             if (category == null)
