@@ -9,12 +9,13 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+    background-size: cover;
 }
 
 .bodyBG {
     margin-bottom: 60px;
-    background-image: url('/img/Mini.jpg');
+    background-image: url('/img/PunYeta (1).jpg');
 }
 
